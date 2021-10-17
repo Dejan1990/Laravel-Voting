@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Idea;
+use App\Models\User;
 use App\Models\Status;
 use App\Models\Category;
-use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -18,7 +18,7 @@ class ShowIdeasTest extends TestCase
     public function list_of_ideas_shows_on_main_page()
     {
         $user = User::factory()->create();
-
+        
         $categoryOne = Category::factory()->create(['name' => 'Category 1']);
         $categoryTwo = Category::factory()->create(['name' => 'Category 2']);
 
@@ -80,6 +80,7 @@ class ShowIdeasTest extends TestCase
         $response->assertSee('<div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>', false);
     }
 
+    
     /** @test */
     public function ideas_pagination_works()
     {
@@ -120,7 +121,9 @@ class ShowIdeasTest extends TestCase
         $user = User::factory()->create();
 
         $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+
         $statusOpen = Status::factory()->create(['name' => 'Open', 'classes' => 'bg-gray-200']);
+
         $ideaOne = Idea::factory()->create([
             'user_id' => $user->id,
             'category_id' => $categoryOne->id,
@@ -128,6 +131,7 @@ class ShowIdeasTest extends TestCase
             'title' => 'My First Idea',
             'description' => 'Description for my first idea',
         ]);
+
         $ideaTwo = Idea::factory()->create([
             'user_id' => $user->id,
             'category_id' => $categoryOne->id,
@@ -135,14 +139,10 @@ class ShowIdeasTest extends TestCase
             'title' => 'My First Idea',
             'description' => 'Another Description for my first idea',
         ]);
-
         $response = $this->get(route('idea.show', $ideaOne));
-
         $response->assertSuccessful();
         $this->assertTrue(request()->path() === 'ideas/my-first-idea');
-
         $response = $this->get(route('idea.show', $ideaTwo));
-
         $response->assertSuccessful();
         $this->assertTrue(request()->path() === 'ideas/my-first-idea-1');
     }this->assertTrue(request()->path() === 'ideas/my-first-idea-1');

@@ -47,4 +47,17 @@ class Idea extends Model
     {
         return $this->belongsToMany(User::class, 'votes');
     }
+
+    public function isVotedByUser(?User $user) //?User-> make it optional -> u ovom slucaju user mozda nije ulogovan
+    {
+        if (!$user) { // ovo radimo zbog ?User $user
+            return false;
+        }
+
+        return Vote::where('user_id', $user->id)
+            ->where('idea_id', $this->id)
+            ->exists();
+
+        //return $this->votes()->where('user_id', $user->id)->exists();
+    }
 }
