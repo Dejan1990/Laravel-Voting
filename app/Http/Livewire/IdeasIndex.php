@@ -16,11 +16,13 @@ class IdeasIndex extends Component
     public $status;
     public $category;
     public $filter;
+    public $search;
 
     protected $queryString = [
         'status',
         'category',
         'filter',
+        'search',
     ];
 
     protected $listeners = ['queryStringUpdatedStatus'];
@@ -36,6 +38,11 @@ class IdeasIndex extends Component
     }
 
     public function updatingFilter() // Resetting pagination after filtering data(livewire docs) -> nije potrebno ovo raditi u mojoj verziji livewire
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
     {
         $this->resetPage();
     }
@@ -70,6 +77,9 @@ class IdeasIndex extends Component
                     return $query->orderByDesc('votes_count'); // 'votes_count' is from below ->withCount('votes')
                 })->when($this->filter && $this->filter === 'My Ideas', function ($query) {
                     return $query->where('user_id', auth()->id());
+                })->when(strlen($this->search) >= 3, function ($query) {
+                    return $query->where('title', 'like', '%'.$this->search.'%');
+                                //->orWhere('description', 'like', '%'.$this->search.'%');
                 })
                 ->addSelect(['voted_by_user' => Vote::select('id')
                     ->where('user_id', auth()->id())
