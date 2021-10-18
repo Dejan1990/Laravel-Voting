@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use App\Exceptions\DuplicateVoteException;
+//use App\Exceptions\VoteNotFoundException;
 
 class Idea extends Model
 {
@@ -63,6 +65,10 @@ class Idea extends Model
 
     public function vote(User $user)
     {
+        /*if ($this->isVotedByUser($user)) { this is not need cause we use Livewire 2.6
+            throw new DuplicateVoteException;
+        }*/
+
         Vote::create([
             'idea_id' => $this->id,
             'user_id' => $user->id,
@@ -80,6 +86,17 @@ class Idea extends Model
         Vote::where('idea_id', $this->id)
             ->where('user_id', $user->id)
             ->delete();
+        */
+
+        /*this is not need cause we use Livewire 2.6
+        $voteToDelete = Vote::where('idea_id', $this->id)
+            ->where('user_id', $user->id)
+            ->first();
+        if ($voteToDelete) {
+            $voteToDelete->delete();
+        } else {
+            throw new VoteNotFoundException;
+        }
         */
     } 
 
