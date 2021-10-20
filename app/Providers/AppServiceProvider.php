@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +26,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        /*view()->composer('layouts.app', function ($view) { posto koristimo livewire ovo nam ne znaci
+            $view->with([
+                'categories' => Category::all()
+            ]);
+        });*/
     }
 }
