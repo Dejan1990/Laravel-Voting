@@ -53,8 +53,8 @@ class IdeaPolicy
      */
     public function update(User $user, Idea $idea)
     {
-        return $user->id === (int) $idea->user_id
-            && $idea->created_at->addHour()->isPast(); // user can update after 1hr after created idea
+        return $user->id === (int) $idea->user_id;
+           // && $idea->created_at->addHour()->isPast(); // user can update after 1hr after created idea
         //&& now()->subHour() <= $idea->created_at;
             //$idea->created_at->addHour()->isPast(); // or ->isFuture() if it better fits your needs
     }
