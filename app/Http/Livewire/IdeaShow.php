@@ -13,7 +13,13 @@ class IdeaShow extends Component
     public $votesCount;
     public $hasVoted;
 
-    protected $listeners = ['statusWasUpdated', 'ideaWasUpdated', 'ideaWasMarkedAsSpam', 'ideaWasMarkedAsNotSpam'];
+    protected $listeners = [
+        'statusWasUpdated',
+        'ideaWasUpdated',
+        'ideaWasMarkedAsSpam',
+        'ideaWasMarkedAsNotSpam',
+        'commentWasAdded'
+    ];
 
     /*protected $listeners = [ ne bismo morali da dodajemo refresh() na vise mesta
         'statusWasUpdated' => '$refresh',
@@ -43,6 +49,11 @@ class IdeaShow extends Component
     }
 
     public function ideaWasMarkedAsNotSpam()
+    {
+        $this->idea->refresh();
+    }
+
+    public function commentWasAdded()
     {
         $this->idea->refresh();
     }
