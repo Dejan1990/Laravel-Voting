@@ -90,6 +90,8 @@
                 </div>
             </div>
         </main>
+
+        {{-- @stack('modals') da ne ucitava, ovo bismo koristili --}}
         @livewireScripts
     </body>
 </html>
