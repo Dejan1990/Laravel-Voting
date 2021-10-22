@@ -18,7 +18,8 @@ class IdeaShow extends Component
         'ideaWasUpdated',
         'ideaWasMarkedAsSpam',
         'ideaWasMarkedAsNotSpam',
-        'commentWasAdded'
+        'commentWasAdded',
+        'commentWasDeleted'
     ];
 
     /*protected $listeners = [ ne bismo morali da dodajemo refresh() na vise mesta
@@ -54,6 +55,11 @@ class IdeaShow extends Component
     }
 
     public function commentWasAdded()
+    {
+        $this->idea->refresh();
+    }
+
+    public function commentWasDeleted()
     {
         $this->idea->refresh();
     }

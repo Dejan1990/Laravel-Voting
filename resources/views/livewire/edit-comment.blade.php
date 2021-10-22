@@ -3,7 +3,7 @@
     x-data="{ isOpen: false }"
     x-show="isOpen"
     @keydown.escape.window="isOpen = false"
-    {{-- @custom-show-edit-modal.window="
+    {{-- @custom-show-edit-modal.window="  we get rid of thid because we're no longer listening for alpine events, we're listening fot livewire events -> this below
         isOpen = true
         $nextTick(() => $refs.title.focus())
     " --}}
