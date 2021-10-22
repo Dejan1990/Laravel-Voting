@@ -4,10 +4,15 @@
         Livewire.on('commentWasAdded', () => {
             isOpen = false
         })
-
         Livewire.hook('message.processed', (message, component) => {
+            {{-- if (message.updateQueue[0].method === 'gotoPage' || message.updateQueue[0].method === 'nextPage' || message.updateQueue[0].method === 'previousPage') { --}}
+            if (['gotoPage', 'previousPage', 'nextPage'].includes(message.updateQueue[0].method)) {
+                const firstComment = document.querySelector('.comment-container:first-child')
+                firstComment.scrollIntoView({ behavior: 'smooth'})
+            }
+
             if (message.updateQueue[0].payload.event === 'commentWasAdded'
-             && message.component.fingerprint.name === 'idea-comments') {
+            && message.component.fingerprint.name === 'idea-comments') {
                 const lastComment = document.querySelector('.comment-container:last-child')
                 lastComment.scrollIntoView({ behavior: 'smooth'})
                 lastComment.classList.add('bg-green-50')
