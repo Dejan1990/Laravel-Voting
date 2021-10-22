@@ -50,6 +50,11 @@ class Idea extends Model
         return $this->belongsToMany(User::class, 'votes');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function isVotedByUser(?User $user) //?User-> make it optional -> u ovom slucaju user mozda nije ulogovan
     {
         if (!$user) { // ovo radimo zbog ?User $user

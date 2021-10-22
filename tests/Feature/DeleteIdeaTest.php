@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Idea;
 use App\Models\User;
 use App\Models\Vote;
+use App\Models\Comment;
 use Livewire\Livewire;
 use Illuminate\Http\Response;
 use App\Http\Livewire\IdeaShow;
@@ -145,5 +146,28 @@ class DeleteIdeaTest extends TestCase
                 'votesCount' => 4,
             ])
             ->assertDontSee('Delete Idea');
+    }
+
+    /** @test */
+    public function deleting_an_idea_with_comments_works_when_user_has_authorization()
+    {
+        $user = User::factory()->create();
+
+        $idea = Idea::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        Comment::factory()->create([
+            'idea_id' => $idea->id,
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(DeleteIdea::class, [
+                'idea' => $idea,
+            ])
+            ->call('deleteIdea')
+            ->assertRedirect(route('idea.index'));
+
+        $this->assertEquals(0, Idea::count());
     }
 }
