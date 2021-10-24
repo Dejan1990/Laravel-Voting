@@ -26,7 +26,7 @@ class DeleteComment extends Component
         }
 
         Comment::destroy($this->comment->id);
-        $this->comment = null;
+        $this->comment = null; //ako napravimo 2 komentara bez refresh stranice pa pokusamo da izbrisemo jedan za drugim bez refresh-a da ne bi pravilo problem
 
         $this->emit('commentWasDeleted', 'Comment was deleted!');
     }
