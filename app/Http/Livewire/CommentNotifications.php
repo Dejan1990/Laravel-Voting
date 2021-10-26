@@ -73,8 +73,9 @@ class CommentNotifications extends Component
         if (! $comment) {
             session()->flash('error_message', 'This comment no longer exists!');
 
-            //return redirect()->route('idea.index');
-            return redirect()->route('idea.show', $notification->data['idea_slug']);
+            return redirect()->route('idea.index');
+            /*return redirect()->route('idea.show', $notification->data['idea_slug']);
+            ovo treba srediti i u testu*/
         }
 
         $comments = $idea->comments()->pluck('id');
