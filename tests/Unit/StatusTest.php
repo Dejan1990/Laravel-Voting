@@ -1,91 +1,40 @@
 <?php
-
 namespace Tests\Unit;
-
-use App\Models\Idea;
-use App\Models\User;
-use App\Models\Status;
 use App\Models\Category;
-use Tests\TestCase;
+use App\Models\Idea;
+use App\Models\Status;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Tests\TestCase;
 class StatusTest extends TestCase
 {
     use RefreshDatabase;
-
     /** @test */
     public function can_get_count_of_each_status()
     {
-        /*Idea::factory()->count(7)->forUser($user)->forCategory(['name' => 'Open'])->create();
-        Idea::factory()->count(15)->forUser($user)->forCategory(['name' => 'Considering'])->create();
-            primer iz komentara
-        */
-        
-
         $statusOpen = Status::factory()->create(['name' => 'Open']);
         $statusConsidering = Status::factory()->create(['name' => 'Considering']);
         $statusInProgress = Status::factory()->create(['name' => 'Considering']);
         $statusImplemented = Status::factory()->create(['name' => 'Implemented']);
         $statusClosed = Status::factory()->create(['name' => 'Closed']);
-
         Idea::factory()->create([
-            'status_id' => $statusOpen->id
+            'status_id' => $statusOpen->id,
         ]);
 
-        Idea::factory()->create([
+        Idea::factory(2)->create([
             'status_id' => $statusConsidering->id,
         ]);
 
-        Idea::factory()->create([
-            'status_id' => $statusConsidering->id,
-        ]);
-
-        Idea::factory()->create([
+        Idea::factory(3)->create([
             'status_id' => $statusInProgress->id,
         ]);
 
-        Idea::factory()->create([
-            'status_id' => $statusInProgress->id,
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusInProgress->id,
-        ]);
-
-        Idea::factory()->create([
+        Idea::factory(4)->create([
             'status_id' => $statusImplemented->id,
         ]);
 
-        Idea::factory()->create([
-            'status_id' => $statusImplemented->id,
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusImplemented->id,
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusImplemented->id,
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusClosed->id
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusClosed->id
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusClosed->id
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusClosed->id
-        ]);
-
-        Idea::factory()->create([
-            'status_id' => $statusClosed->id
+        Idea::factory(5)->create([
+            'status_id' => $statusClosed->id,
         ]);
 
         $this->assertEquals(15, Status::getCount()['all_statuses']);
